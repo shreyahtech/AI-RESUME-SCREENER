@@ -6,12 +6,17 @@ from components.dashboard import show_dashboard
 from components.sidebar import show_sidebar
 from components.upload import upload_files
 from components.cards import show_metrics
+from components.profile import show_profile
+from components.charts import show_gauge
+from components.feedback import show_feedback
+from components.ats_card import show_ats
 
 # Utils
-from utils.parser import extract_text
+from utils.parser import extract_text, extract_details
 from utils.skills import get_skills
 from utils.bert_matcher import get_semantic_score
 from utils.interview import generate_questions
+from utils.ats import calculate_ats_score
 
 
 # ---------------------- UI ----------------------
@@ -33,6 +38,8 @@ if resumes and jd:
 
         # Extract text
         text = extract_text(resume)
+        ats_score, ats_checks = calculate_ats_score(text)
+        details = extract_details(text)
 
         # Semantic similarity score
         score = get_semantic_score(text, jd)
@@ -49,6 +56,7 @@ if resumes and jd:
                 "Score": round(score, 2),
                 "Skills": ", ".join(resume_skills),
                 "Missing Skills": ", ".join(missing_skills),
+                "Details": details
             }
         )
 
@@ -60,6 +68,9 @@ if resumes and jd:
 
     # Best candidate
     best = df.iloc[0]
+    show_profile(best["Details"])
+    show_gauge(best["Score"])
+    show_feedback(best["Score"])
 
     # ---------------------- Dashboard Metrics ----------------------
 
