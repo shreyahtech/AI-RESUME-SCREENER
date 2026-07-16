@@ -1,54 +1,106 @@
-
 import streamlit as st
 import pandas as pd
+
+# Components
+from components.dashboard import show_dashboard
+from components.sidebar import show_sidebar
+from components.upload import upload_files
+from components.cards import show_metrics
+
+# Utils
 from utils.parser import extract_text
 from utils.skills import get_skills
 from utils.bert_matcher import get_semantic_score
 from utils.interview import generate_questions
 
-st.title("Advanced AI Resume Screening System")
 
-jd = st.text_area("Paste Job Description")
-resumes = st.file_uploader(
-    "Upload Resume PDFs",
-    type=["pdf"],
-    accept_multiple_files=True
-)
+# ---------------------- UI ----------------------
+
+show_dashboard()
+page = show_sidebar()
+
+# Upload section
+jd, resumes = upload_files()
+
+
+# ---------------------- Resume Analysis ----------------------
 
 if resumes and jd:
+
     results = []
 
     for resume in resumes:
+
+        # Extract text
         text = extract_text(resume)
+
+        # Semantic similarity score
         score = get_semantic_score(text, jd)
 
-        skills = get_skills(text)
+        # Skills
+        resume_skills = get_skills(text)
         jd_skills = get_skills(jd)
 
-        missing = list(set(jd_skills) - set(skills))
+        missing_skills = list(set(jd_skills) - set(resume_skills))
 
-        results.append({
-            "Candidate": resume.name,
-            "Score": round(score,2),
-            "Skills": ", ".join(skills),
-            "Missing Skills": ", ".join(missing)
-        })
+        results.append(
+            {
+                "Candidate": resume.name,
+                "Score": round(score, 2),
+                "Skills": ", ".join(resume_skills),
+                "Missing Skills": ", ".join(missing_skills),
+            }
+        )
 
+    # Create dataframe
     df = pd.DataFrame(results)
+
+    # Sort candidates
     df = df.sort_values("Score", ascending=False)
 
-    st.subheader("Candidate Ranking")
-    st.dataframe(df)
+    # Best candidate
+    best = df.iloc[0]
 
-    st.download_button(
-        "Download Results CSV",
-        df.to_csv(index=False),
-        "candidate_ranking.csv"
+    # ---------------------- Dashboard Metrics ----------------------
+
+    show_metrics(
+        best_score=best["Score"],
+        total_candidates=len(df),
+        total_skills=len(jd_skills),
     )
 
-    top = df.iloc[0]
-    st.success(f"Recommended Candidate: {top['Candidate']}")
+    st.markdown("---")
 
-    st.subheader("Suggested Interview Questions")
-    for q in generate_questions(jd):
-        st.write("•", q)
+    # ---------------------- Candidate Ranking ----------------------
+
+    st.subheader("🏆 Candidate Ranking")
+
+    st.dataframe(
+        df,
+        use_container_width=True,
+    )
+
+    st.download_button(
+        label="📥 Download Results CSV",
+        data=df.to_csv(index=False),
+        file_name="candidate_ranking.csv",
+        mime="text/csv",
+    )
+
+    st.markdown("---")
+
+    # ---------------------- Recommendation ----------------------
+
+    st.success(
+        f"✅ Recommended Candidate: **{best['Candidate']}** "
+        f"with a score of **{best['Score']}%**"
+    )
+
+    # ---------------------- Interview Questions ----------------------
+
+    st.subheader("💬 Suggested Interview Questions")
+
+    questions = generate_questions(jd)
+
+    for question in questions:
+        st.write(f"• {question}")

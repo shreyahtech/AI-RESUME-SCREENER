@@ -1,0 +1,19 @@
+.stButton>button{
+    width:100%;
+    border-radius:10px;
+    font-size:16px;
+}
+
+.stTextArea textarea{
+    border-radius:10px;
+}
+
+.stFileUploader{
+    border:2px dashed #4CAF50;
+    padding:15px;
+    border-radius:10px;
+}
+
+h1{
+    color:#00BFFF;
+}
