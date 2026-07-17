@@ -290,13 +290,16 @@ if resumes and jd:
 
     st.markdown("---")
 
-    # ======================================================
+       # ======================================================
     # Interview Questions
     # ======================================================
 
     st.subheader("💬 Suggested Interview Questions")
 
-    questions = generate_questions(jd)
+    questions = generate_questions(
+        jd,
+        best["Skill List"]
+    )
 
     for question in questions:
         st.write(f"• {question}")
