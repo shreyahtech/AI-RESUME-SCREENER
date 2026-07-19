@@ -148,6 +148,7 @@ if resumes and jd:
         best_score=best["Score"],
         total_candidates=len(df),
         total_skills=len(jd_skills),
+        ats_score=best["ATS Score"]
     )
 
 
