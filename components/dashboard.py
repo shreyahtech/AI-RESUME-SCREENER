@@ -22,21 +22,13 @@ def show_dashboard():
 
     st.markdown(
         """
-<div class="hero">
-
-    <div class="hero-title">
-        🤖 AI Resume Screener Pro
-    </div>
-
-    <div class="hero-subtitle">
-        AI-Powered Recruitment Dashboard
-    </div>
-
-    <div class="hero-text">
-        Semantic Matching • ATS Analysis • AI Feedback • Resume Intelligence
-    </div>
-
-</div>
+        <div class="hero">
+            <h1 class="hero-title">🤖 AI Resume Screener Pro</h1>
+            <p class="hero-subtitle">AI-Powered Recruitment Dashboard</p>
+            <p class="hero-text">
+                Semantic Matching • ATS Analysis • AI Feedback • Resume Intelligence
+            </p>
+        </div>
         """,
-        unsafe_allow_html=True,
+        unsafe_allow_html=True
     )

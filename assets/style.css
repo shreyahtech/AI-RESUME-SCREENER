@@ -1,46 +1,591 @@
-/* ===========================
+/* =====================================================
    AI Resume Screener Pro
-   Glassmorphism Theme
-=========================== */
+   Futuristic Glass Theme
+===================================================== */
 
-/* Background */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
-.stApp {
-    background: linear-gradient(135deg, #050816 0%, #0F172A 55%, #1E1B4B 100%);
+:root{
+
+--bg:#060816;
+--card:rgba(22,28,49,.72);
+
+--blue:#5B8CFF;
+--purple:#8B5CF6;
+
+--text:#FFFFFF;
+--muted:#AAB6D8;
+
 }
 
-/* Hero */
+/* =====================================================
+   Global
+===================================================== */
+
+html,
+body,
+[class*="css"]{
+
+font-family:'Poppins',sans-serif;
+
+}
+
+.stApp{
+
+background:
+linear-gradient(
+135deg,
+#050816 0%,
+#09111F 45%,
+#1A1448 100%
+);
+
+color:white;
+
+}
+
+header{
+
+background:transparent;
+
+}
+
+footer{
+
+visibility:hidden;
+
+}
+
+.block-container{
+
+padding-top:2rem;
+padding-left:3rem;
+padding-right:3rem;
+max-width:1350px;
+
+}
+
+/* =====================================================
+   Scrollbar
+===================================================== */
+
+::-webkit-scrollbar{
+
+width:10px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#4F46E5;
+border-radius:20px;
+
+}
+
+/* =====================================================
+   Futuristic Hero
+===================================================== */
 
 .hero{
-    padding:40px;
-    border-radius:28px;
-    margin-bottom:25px;
 
-    background:rgba(255,255,255,.08);
+text-align:center;
 
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
+padding:70px 50px;
 
-    border:1px solid rgba(255,255,255,.15);
+position:relative;
 
-    box-shadow:
-        0 8px 40px rgba(0,0,0,.35);
+overflow:hidden;
+
+background:
+linear-gradient(
+135deg,
+rgba(79,139,255,.18),
+rgba(139,92,246,.18)
+);
+
+border-radius:32px;
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:
+0 0 70px rgba(91,140,255,.18);
+
+margin-bottom:35px;
+
+}
+
+.hero-badge{
+
+display:inline-block;
+
+padding:10px 18px;
+
+border-radius:999px;
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,255,255,.12);
+
+color:#A5B4FC;
+
+font-size:14px;
+
+margin-bottom:20px;
+
 }
 
 .hero-title{
-    font-size:44px;
-    font-weight:800;
-    color:white;
+
+font-size:64px;
+
+font-weight:800;
+
+color:white;
+
+margin-bottom:12px;
+
+letter-spacing:-1px;
+
+text-shadow:
+0 0 20px rgba(91,140,255,.45),
+0 0 40px rgba(139,92,246,.25);
+
 }
 
 .hero-subtitle{
-    font-size:22px;
-    color:#A5B4FC;
-    margin-top:8px;
+
+font-size:26px;
+
+font-weight:500;
+
+color:#C7D2FE;
+
+letter-spacing:.5px;
+
+margin-top:10px;
+
 }
 
 .hero-text{
-    color:#CBD5E1;
-    margin-top:12px;
-    font-size:16px;
+
+margin-top:18px;
+
+font-size:18px;
+
+color:#CBD5E1;
+
+}
+
+.hero-tags{
+
+margin-top:30px;
+
+display:flex;
+
+justify-content:center;
+
+gap:14px;
+
+flex-wrap:wrap;
+
+}
+
+.hero-tags span{
+
+padding:12px 18px;
+
+border-radius:999px;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+color:white;
+
+}
+
+.hero-tags span:hover{
+
+transform:translateY(-3px);
+
+border-color:#7C5CFF;
+
+}
+
+/* =====================================================
+   Section Cards
+===================================================== */
+
+.section-card{
+
+padding:28px;
+
+border-radius:22px;
+
+background:rgba(22,28,49,.72);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.08);
+
+margin-bottom:18px;
+
+box-shadow:0 10px 35px rgba(0,0,0,.25);
+
+}
+
+.section-card h2{
+
+margin:0;
+font-size:30px;
+color:white;
+
+}
+
+.section-card p{
+
+margin-top:10px;
+color:#AAB6D8;
+font-size:16px;
+
+}
+
+/* =====================================================
+   Inputs
+===================================================== */
+
+textarea,
+input{
+
+background:#151B2F !important;
+
+color:white !important;
+
+border-radius:18px !important;
+
+border:1px solid rgba(255,255,255,.12) !important;
+
+}
+
+/* =====================================================
+   Upload Area
+===================================================== */
+
+section[data-testid="stFileUploader"]{
+
+background:rgba(22,28,49,.72);
+
+border:2px dashed rgba(91,140,255,.35);
+
+border-radius:24px;
+
+padding:25px;
+
+backdrop-filter:blur(18px);
+
+}
+
+section[data-testid="stFileUploader"]:hover{
+
+border-color:#7C5CFF;
+
+box-shadow:
+0 0 30px rgba(124,92,255,.20);
+
+}
+
+/* =====================================================
+   Buttons
+===================================================== */
+
+.stButton>button{
+
+width:100%;
+
+padding:14px;
+
+border:none;
+
+border-radius:18px;
+
+font-size:16px;
+
+font-weight:600;
+
+color:white;
+
+background:
+linear-gradient(
+90deg,
+#4F8BFF,
+#8B5CF6
+);
+
+}
+
+.stButton>button:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+0 0 25px rgba(91,140,255,.45),
+0 0 45px rgba(139,92,246,.30);
+
+}
+
+/* =====================================================
+   Metric Cards
+===================================================== */
+
+.metric-card{
+
+background:rgba(24,30,53,.78);
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(18px);
+
+border-radius:24px;
+
+padding:30px 20px;
+
+text-align:center;
+
+height:220px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+box-shadow:0 10px 35px rgba(0,0,0,.35);
+
+position:relative;
+
+overflow:hidden;
+
+}
+.metric-card::before{
+
+content:"";
+
+position:absolute;
+
+width:180px;
+
+height:180px;
+
+background:
+radial-gradient(
+circle,
+rgba(91,140,255,.18),
+transparent 70%
+);
+
+top:-70px;
+
+right:-70px;
+
+}
+
+.metric-card:hover{
+
+transform:
+translateY(-8px)
+scale(1.03);
+
+border:1px solid #8B5CF6;
+
+box-shadow:
+0 0 35px rgba(91,140,255,.30),
+0 0 55px rgba(139,92,246,.20);
+
+}
+
+.metric-icon{
+
+font-size:52px;
+
+margin-bottom:16px;
+
+}
+
+.metric-value{
+
+font-size:52px;
+
+font-weight:800;
+
+color:white;
+
+text-shadow:
+0 0 15px rgba(91,140,255,.30);
+
+}
+
+.metric-title{
+
+margin-top:10px;
+
+font-size:17px;
+
+color:#A5B4FC;
+
+}
+
+/* =====================================================
+   Sidebar
+===================================================== */
+
+[data-testid="stSidebar"]{
+
+background:
+linear-gradient(
+180deg,
+rgba(10,15,30,.98),
+rgba(18,23,45,.95)
+);
+
+border-right:1px solid rgba(255,255,255,.08);
+
+}
+
+[data-testid="stSidebar"] *{
+
+color:white;
+
+}
+
+/* Sidebar Navigation */
+
+.stRadio label{
+
+padding:14px 18px;
+
+border-radius:14px;
+
+margin-bottom:8px;
+
+background:rgba(255,255,255,.03);
+
+border:1px solid transparent;
+
+transition:all .25s ease;
+
+}
+
+.stRadio label:hover{
+
+background:rgba(91,140,255,.15);
+
+border:1px solid rgba(91,140,255,.35);
+
+transform:translateX(6px);
+
+box-shadow:
+0 0 20px rgba(91,140,255,.15);
+
+}
+
+/* =====================================================
+   Candidate Card
+===================================================== */
+
+.candidate-card{
+
+background:rgba(22,28,49,.75);
+
+border-radius:28px;
+
+padding:35px;
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+box-shadow:
+0 0 35px rgba(91,140,255,.12);
+
+margin-bottom:30px;
+
+}
+
+/* =====================================================
+   Tables
+===================================================== */
+
+[data-testid="stDataFrame"]{
+
+border-radius:18px;
+
+overflow:hidden;
+
+border:1px solid rgba(255,255,255,.08);
+
+}
+
+hr{
+
+border-color:rgba(255,255,255,.08);
+
+}
+.hero::before{
+
+content:"";
+
+position:absolute;
+
+width:450px;
+
+height:450px;
+
+background:
+radial-gradient(
+circle,
+rgba(91,140,255,.18),
+transparent 70%
+);
+
+top:-200px;
+
+right:-150px;
+
+pointer-events:none;
+
+}
+/* ==========================================
+   Selectbox
+========================================== */
+
+.stSelectbox > div > div{
+
+background:rgba(22,28,49,.85);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:18px;
+
+color:white;
+
+}
+
+.stSelectbox:hover > div > div{
+
+border:1px solid rgba(91,140,255,.35);
+
+box-shadow:
+0 0 20px rgba(91,140,255,.15);
+
+}
+/* Sticky Sidebar */
+
+[data-testid="stSidebar"]{
+
+position:sticky;
+
+top:0;
+
+height:100vh;
+
 }

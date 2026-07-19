@@ -5,32 +5,87 @@ def show_candidate_card(best):
 
     details = best["Details"]
 
-    st.subheader("👤 Candidate Overview")
+    name = details.get("name", "Unknown")
+    email = details.get("email", "Not Available")
+    phone = details.get("phone", "Not Available")
+    linkedin = details.get("linkedin", "Not Available")
+    github = details.get("github", "Not Available")
+
+    score = best["Score"]
+    ats = best["ATS Score"]
+
+    if score >= 85:
+        recommendation = "🟢 Strong Hire"
+    elif score >= 70:
+        recommendation = "🟡 Consider"
+    else:
+        recommendation = "🔴 Needs Review"
 
     st.markdown(
         f"""
-<div style="padding:25px;
-border-radius:15px;
-background:#f8f9fa;
-box-shadow:0px 4px 10px rgba(0,0,0,0.15);">
+<div class="candidate-card">
 
-<h2>{details["name"]}</h2>
+<div class="candidate-top">
 
-<p>⭐ <b>Match Score:</b> {best["Score"]}%</p>
+<div class="candidate-avatar">
+{name[:1].upper()}
+</div>
 
-<p>🎯 <b>ATS Score:</b> {best["ATS Score"]}%</p>
+<div class="candidate-info">
 
-<hr>
+<div class="candidate-name">
+{name}
+</div>
 
-<p>📧 {details["email"]}</p>
-
-<p>📱 {details["phone"]}</p>
-
-<p>🔗 {details["linkedin"]}</p>
-
-<p>💻 {details["github"]}</p>
+<div class="candidate-role">
+Top Ranked Candidate
+</div>
 
 </div>
-""",
+
+<div class="candidate-score">
+⭐ {score:.1f}%
+</div>
+
+</div>
+
+<div class="candidate-divider"></div>
+
+<div class="candidate-contact">
+
+<div>📧 {email}</div>
+
+<div>📱 {phone}</div>
+
+<div>💼 {linkedin}</div>
+
+<div>💻 {github}</div>
+
+</div>
+
+<div class="candidate-divider"></div>
+
+<div class="candidate-bottom">
+
+<div class="score-pill">
+🎯 Match Score
+<br>
+<b>{score:.1f}%</b>
+</div>
+
+<div class="score-pill">
+📄 ATS Score
+<br>
+<b>{ats}%</b>
+</div>
+
+<div class="recommend-pill">
+{recommendation}
+</div>
+
+</div>
+
+</div>
+        """,
         unsafe_allow_html=True,
     )
