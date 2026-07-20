@@ -3,26 +3,15 @@ import streamlit as st
 
 def metric_card(title, value, emoji):
 
-    st.markdown(
-        f"""
-        <div class="metric-card">
+    html = f"""
+    <div class="metric-card">
+        <div class="metric-icon">{emoji}</div>
+        <div class="metric-value">{value}</div>
+        <div class="metric-title">{title}</div>
+    </div>
+    """
 
-            <div class="metric-icon">
-                {emoji}
-            </div>
-
-            <div class="metric-value">
-                {value}
-            </div>
-
-            <div class="metric-title">
-                {title}
-            </div>
-
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.markdown(html, unsafe_allow_html=True)
 
 
 def show_metrics(best_score, total_candidates, total_skills, ats_score):

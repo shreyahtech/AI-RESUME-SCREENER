@@ -1,6 +1,5 @@
 import streamlit as st
 
-
 def show_candidate_card(best):
 
     details = best["Details"]
@@ -26,10 +25,6 @@ def show_candidate_card(best):
 <div class="candidate-card">
 
 <div class="candidate-top">
-
-<div class="candidate-avatar">
-{name[:1].upper()}
-</div>
 
 <div class="candidate-info">
 

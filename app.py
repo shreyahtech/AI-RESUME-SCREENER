@@ -42,7 +42,7 @@ from utils.summary import generate_summary
 
 show_dashboard()
 
-page = show_sidebar()
+page = show_sidebar() 
 
 jd, resumes = upload_files()
 
@@ -104,8 +104,7 @@ if resumes and jd:
             }
         )
 
-
-
+        
     # ======================================================
     # DataFrame
     # ======================================================
@@ -138,7 +137,16 @@ if resumes and jd:
         df["Candidate"] == selected_candidate
     ].iloc[0]
 
-
+    display_df = df[
+    [
+        "Candidate",
+        "Score",
+        "ATS Score",
+        "Skills",
+        "Missing Skills",
+    ]
+]
+if page == "🏠 Resume Analysis":
 
     # ======================================================
     # Metrics
@@ -150,8 +158,51 @@ if resumes and jd:
         total_skills=len(jd_skills),
         ats_score=best["ATS Score"]
     )
+elif page == "📄 ATS Checker":
 
+    st.subheader("📄 ATS Analysis")
 
+    show_ats(
+        best["ATS Score"],
+        best["ATS Checks"]
+    )
+
+elif page == "📊 Analytics":
+
+    st.subheader("📊 Analytics")
+
+    matched = len(best["Skill List"])
+    missing = len(best["Missing Skill List"])
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        show_candidate_bar(display_df)
+
+    with col2:
+        show_skill_pie(
+            matched,
+            missing
+        )
+    st.divider()
+
+    show_top_candidates(df)
+
+    st.divider()
+
+    show_comparison(df)
+
+elif page == "💬 Interview Questions":
+
+    st.subheader("💬 AI Interview Questions")
+
+    questions = generate_questions(
+        jd,
+        best["Skill List"]
+    )
+
+    for question in questions:
+        st.write(f"• {question}")
 
     # ======================================================
     # Overview
@@ -222,8 +273,7 @@ if resumes and jd:
 
 
         st.progress(
-            best["Score"] / 100
-        )
+            float(best["Score"]) / 100)
 
 
 
@@ -321,48 +371,6 @@ if resumes and jd:
 
 
     st.divider()
-
-
-
-    # ======================================================
-    # Analytics
-    # ======================================================
-
-    st.subheader(
-        "📊 Analytics"
-    )
-
-
-    col1, col2 = st.columns(2)
-
-
-    matched = len(
-        best["Skill List"]
-    )
-
-    missing = len(
-        best["Missing Skill List"]
-    )
-
-
-    with col1:
-
-        show_candidate_bar(
-            display_df
-        )
-
-
-    with col2:
-
-        show_skill_pie(
-            matched,
-            missing
-        )
-
-
-
-    st.divider()
-
 
 
     # ======================================================
