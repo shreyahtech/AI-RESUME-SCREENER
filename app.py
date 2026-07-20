@@ -138,220 +138,6 @@ if resumes and jd:
     ].iloc[0]
 
     display_df = df[
-    [
-        "Candidate",
-        "Score",
-        "ATS Score",
-        "Skills",
-        "Missing Skills",
-    ]
-]
-if page == "🏠 Resume Analysis":
-
-    # ======================================================
-    # Metrics
-    # ======================================================
-
-    show_metrics(
-        best_score=best["Score"],
-        total_candidates=len(df),
-        total_skills=len(jd_skills),
-        ats_score=best["ATS Score"]
-    )
-elif page == "📄 ATS Checker":
-
-    st.subheader("📄 ATS Analysis")
-
-    show_ats(
-        best["ATS Score"],
-        best["ATS Checks"]
-    )
-
-elif page == "📊 Analytics":
-
-    st.subheader("📊 Analytics")
-
-    matched = len(best["Skill List"])
-    missing = len(best["Missing Skill List"])
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        show_candidate_bar(display_df)
-
-    with col2:
-        show_skill_pie(
-            matched,
-            missing
-        )
-    st.divider()
-
-    show_top_candidates(df)
-
-    st.divider()
-
-    show_comparison(df)
-
-elif page == "💬 Interview Questions":
-
-    st.subheader("💬 AI Interview Questions")
-
-    questions = generate_questions(
-        jd,
-        best["Skill List"]
-    )
-
-    for question in questions:
-        st.write(f"• {question}")
-
-    # ======================================================
-    # Overview
-    # ======================================================
-
-    show_summary(df)
-
-
-
-    st.divider()
-
-
-
-    # ======================================================
-    # Candidate Profile
-    # ======================================================
-
-    show_candidate_card(best)
-
-
-
-    st.divider()
-
-
-
-    # ======================================================
-    # Skills
-    # ======================================================
-
-    col1, col2 = st.columns(2)
-
-
-    with col1:
-
-        show_skill_badges(
-            best["Skill List"],
-            "✅ Matched Skills",
-            "#28a745"
-        )
-
-
-    with col2:
-
-        show_skill_badges(
-            best["Missing Skill List"],
-            "❌ Missing Skills",
-            "#dc3545"
-        )
-
-
-
-    st.divider()
-
-
-
-    # ======================================================
-    # Match Score + ATS
-    # ======================================================
-
-    col1, col2 = st.columns(2)
-
-
-    with col1:
-
-        show_gauge(
-            best["Score"]
-        )
-
-
-        st.progress(
-            float(best["Score"]) / 100)
-
-
-
-    with col2:
-
-        show_ats(
-            best["ATS Score"],
-            best["ATS Checks"]
-        )
-
-
-
-    st.divider()
-
-
-
-    # ======================================================
-    # AI Feedback
-    # ======================================================
-
-    show_feedback(
-        best["Score"],
-        best["Details"],
-        best["Skill List"],
-        best["Missing Skill List"],
-        best["ATS Score"],
-    )
-
-
-
-    st.divider()
-
-
-
-    # ======================================================
-    # Recruiter Summary
-    # ======================================================
-
-    summary = generate_summary(best)
-
-    show_recruiter_summary(
-        summary
-    )
-
-
-
-    st.divider()
-
-
-
-    # ======================================================
-    # Resume Preview
-    # ======================================================
-
-    with st.expander(
-        "📄 Resume Preview"
-    ):
-
-        st.write(
-            best["Resume Text"][:3000]
-        )
-
-
-
-    st.divider()
-
-
-
-    # ======================================================
-    # Candidate Ranking
-    # ======================================================
-
-    st.subheader(
-        "🏆 Candidate Ranking"
-    )
-
-
-    display_df = df[
         [
             "Candidate",
             "Score",
@@ -361,94 +147,190 @@ elif page == "💬 Interview Questions":
         ]
     ]
 
-
-    st.dataframe(
-        display_df,
-        use_container_width=True,
-        hide_index=True,
-    )
-
-
-
-    st.divider()
-
-
     # ======================================================
-    # Top Candidates
+    # Resume Analysis
     # ======================================================
 
-    show_top_candidates(df)
+    if page == "🏠 Resume Analysis":
 
+        show_metrics(
+            best_score=best["Score"],
+            total_candidates=len(df),
+            total_skills=len(jd_skills),
+            ats_score=best["ATS Score"]
+        )
 
+        show_summary(df)
 
-    st.divider()
+        st.divider()
 
+        show_candidate_card(best)
 
+        st.divider()
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            show_skill_badges(
+                best["Skill List"],
+                "✅ Matched Skills",
+                "#28a745"
+            )
+
+        with col2:
+            show_skill_badges(
+                best["Missing Skill List"],
+                "❌ Missing Skills",
+                "#dc3545"
+            )
+
+        st.divider()
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            show_gauge(best["Score"])
+
+        with col2:
+            show_ats(
+                best["ATS Score"],
+                best["ATS Checks"]
+            )
+
+        st.divider()
+
+        show_feedback(
+            best["Score"],
+            best["Details"],
+            best["Skill List"],
+            best["Missing Skill List"],
+            best["ATS Score"],
+        )
+
+        st.divider()
+
+        summary = generate_summary(best)
+
+        show_recruiter_summary(summary)
+
+        st.divider()
+
+        with st.expander("📄 Resume Preview"):
+            st.write(best["Resume Text"][:3000])
+
+        st.divider()
+
+        st.subheader("🏆 Candidate Ranking")
+
+        st.dataframe(
+            display_df,
+            use_container_width=True,
+            hide_index=True,
+        )
+
+        st.divider()
+
+        st.download_button(
+            label="📥 Download Results CSV",
+            data=display_df.to_csv(index=False),
+            file_name="candidate_ranking.csv",
+            mime="text/csv",
+        )
+
+        st.divider()
+
+        st.success(
+            f"🏆 Recommended Candidate: **{df.iloc[0]['Candidate']}** "
+            f"with Match Score **{df.iloc[0]['Score']}%**"
+        )
 
     # ======================================================
-    # Candidate Comparison
+    # ATS Checker
     # ======================================================
 
-    show_comparison(df)
+    elif page == "📄 ATS Checker":
 
+        st.subheader("📄 ATS Analysis")
 
-
-    st.divider()
-
-
-
-    # ======================================================
-    # Download
-    # ======================================================
-
-    st.download_button(
-        label="📥 Download Results CSV",
-
-        data=display_df.to_csv(index=False),
-
-        file_name="candidate_ranking.csv",
-
-        mime="text/csv",
-    )
-
-
-
-    st.divider()
-
-
+        show_ats(
+            best["ATS Score"],
+            best["ATS Checks"]
+        )
 
     # ======================================================
-    # Recommendation
+    # Analytics
     # ======================================================
 
-    st.success(
-        f"🏆 Recommended Candidate: **{df.iloc[0]['Candidate']}** "
-        f"with Match Score **{df.iloc[0]['Score']}%**"
-    )
+    elif page == "📊 Analytics":
 
+        st.subheader("📊 Analytics")
 
+        matched = len(best["Skill List"])
+        missing = len(best["Missing Skill List"])
 
-    st.divider()
+        col1, col2 = st.columns(2)
 
+        with col1:
+            show_candidate_bar(display_df)
 
+        with col2:
+            show_skill_pie(
+                matched,
+                missing
+            )
+
+        st.divider()
+
+        show_top_candidates(df)
+
+        st.divider()
+
+        show_comparison(df)
 
     # ======================================================
     # Interview Questions
     # ======================================================
 
-    st.subheader(
-        "💬 Suggested Interview Questions"
-    )
+    elif page == "💬 Interview Questions":
 
+        st.subheader("💬 AI Interview Questions")
 
-    questions = generate_questions(
-        jd,
-        best["Skill List"]
-    )
-
-
-    for question in questions:
-
-        st.write(
-            f"• {question}"
+        questions = generate_questions(
+            jd,
+            best["Skill List"]
         )
+
+        for question in questions:
+            st.write(f"• {question}")
+
+    # ======================================================
+    # About
+    # ======================================================
+
+    elif page == "ℹ️ About":
+
+        st.title("🤖 AI Resume Screener Pro")
+
+        st.markdown("""
+### Features
+
+- Semantic Resume Matching (BERT)
+- ATS Score Analysis
+- Skill Gap Detection
+- Candidate Ranking
+- Interview Question Generation
+- Resume Intelligence Dashboard
+
+Built with:
+- Streamlit
+- Sentence Transformers
+- Pandas
+- Plotly
+- Python
+        """)
+
+else:
+
+    st.info(
+        "👆 Upload a Job Description and at least one resume to begin analysis."
+    )
