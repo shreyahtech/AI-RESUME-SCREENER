@@ -49,54 +49,6 @@ An AI-powered recruitment platform that helps recruiters analyze resumes, identi
 6. Missing skills and strengths are identified.
 7. Recruiters receive actionable insights and interview questions.
 
----
-
-## 📸 Screenshots
-
-### Dashboard
-(Add screenshot here)
-
-### Candidate Analysis
-(Add screenshot here)
-
-### Analytics Dashboard
-(Add screenshot here)
-
----
-
-## ⚙️ Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/yourusername/AI-Resume-Screener-Pro.git
-cd AI-Resume-Screener-Pro
-```
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-Run the application:
-
-```bash
-streamlit run app.py
-```
-
----
-
-## 🎯 Future Improvements
-
-- Resume recommendations using LLMs
-- Multi-language resume support
-- Recruiter authentication system
-- Database integration
-- Cloud deployment
-- Email notifications
-
----
 
 ## 👩‍💻 Author
 
